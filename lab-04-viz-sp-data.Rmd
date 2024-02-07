@@ -162,9 +162,18 @@ We know exactly which states are in the US, and we have this information in the 
 "Filter for `state`s that are not in `states$abbreviation`."
 ```
 
+
 ```{r}
-dennys %>%
-  filter(!(state %in% states$abbreviation))
+#| label: dennys-outside-us
+#| eval: true
+
+library(readr)
+
+states <- read_csv("data/states.csv")
+
+dennys_outside_us <- dennys[!(dennys$state %in% states$abbreviation), ]
+
+print(dennys_outside_us)
 ```
 
 6.  Add a country variable to the Denny's dataset and set all observations equal to `"United States"`. Remember, you can use the `mutate` function for adding a variable. Make sure to save the result of this as `dennys` again so that the stored data frame contains the new variable going forward.
@@ -174,13 +183,23 @@ We don't need to tell R how many times to repeat the character string "United St
 ```
 
 ```{r}
-dennys %>%
-  mutate(country = "United States")
+#| label: dennys-mutate
+#| eval: true
+
+library(dplyr)
+
+dennys <- mutate(dennys, country = "United States")
+
+print(dennys)
+
 ```
 
 7.  Find the La Quinta locations that are outside the US, and figure out which country they are in.
     This might require some googling.
     Take notes, you will need to use this information in the next exercise.
+    
+**Answer:**
+The La Quinta locations outside of the United States can be found in Canada, Mexico, China, New Zealand, Turkey, United Arab Emirates, Chile, Colombia, and Ecuador.
 
 8.  Add a country variable to the La Quinta dataset.
     Use the `case_when` function to populate this variable.
