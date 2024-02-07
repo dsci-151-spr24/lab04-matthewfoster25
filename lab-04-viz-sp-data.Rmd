@@ -207,12 +207,18 @@ The La Quinta locations outside of the United States can be found in Canada, Mex
     Here is some starter code to get you going:
 
 ```{r eval = FALSE}
-laquinta %>%
+laquinta <- laquinta %>%
   mutate(country = case_when(
-    state %in% state.abb     ~ "United States",
-    state %in% c("ON", "BC") ~ "Canada",
-    state == "ANT"           ~ "Colombia",
-    ...                      # fill in the rest
+    state %in% state.abb      ~ "United States",
+    state %in% c("ON", "BC")  ~ "Canada",
+    state == "DF"             ~ "Mexico",
+    state == "BJ"             ~ "China",
+    state == "N"              ~ "New Zealand",
+    state == "TR"             ~ "Turkey",
+    state == "AE"             ~ "United Arab Emirates",
+    state == "CL"             ~ "Chile",
+    state == "COL"            ~ "Colombia",
+    state == "EC"             ~ "Ecuador"
   ))
 ```
 
@@ -228,6 +234,50 @@ laquinta <- laquinta %>%
 ```
 
 9.  Which states have the most and fewest Denny's locations? What about La Quinta? Is this surprising? Why or why not?
+
+```{r}
+#| label: dennys-states
+#| eval: true
+
+dennys_state_counts <- dennys %>%
+  group_by(state) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+
+print("Most Denny's locations:")
+print(head(dennys_state_counts))
+
+print("Fewest Denny's locations:")
+print(tail(dennys_state_counts))
+
+```
+
+**Answer:**
+The states with the most Denny's are, California, Texas, Florida, Arizona, Illinois, and New York.
+
+The states with the fewest Denny's are New Hampshire, South Dakota, West Virginia, the District of Columbia, Vermont, and Delaware.
+
+```{r}
+#| label: laquinta-states
+#| eval: true
+
+laquinta_state_counts <- laquinta %>%
+  group_by(state) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+
+print("Most La Quinta locations:")
+print(head(laquinta_state_counts))
+
+print("Fewest La Quinta locations:")
+print(tail(laquinta_state_counts))
+
+```
+
+**Answer:**
+The states with the most La Quintas are, Texas, Florida, California, Georgia, Tennesee, and Oklahoma.
+
+The states with the fewest La Quintas are the Federated States of Micronesia, Maine, ON, QR, SL, and Vermont.
 
 Next, let's calculate which states have the most Denny's locations *per thousand square miles*.
 This requires *joining* information from the frequency tables you created in Exercise 8 with information from the `states` data frame.
@@ -247,6 +297,46 @@ Before you move on the the next question, run the code above and take a look at 
 In the next exercise you will need to build on this pipe.
 
 10. Which states have the most Denny's locations per thousand square miles? What about La Quinta?
+
+```{r}
+#| label: dennys-state-count-1000
+#| eval: true
+
+dennys_state_counts <- dennys %>%
+  count(state)
+
+dennys_state_counts <- inner_join(dennys_state_counts, states, by = c("state" = "abbreviation"))
+
+dennys_state_counts <- mutate(dennys_state_counts, dennys_per_1000_sq_miles = n / (area))
+
+dennys_state_counts <- arrange(dennys_state_counts, desc(dennys_per_1000_sq_miles))
+
+print(dennys_state_counts)
+
+```
+
+**Answer:**
+The states with the most Denny's per thousand square miles are the District of Columbia, Rhode Island, and Califronia.
+
+```{r}
+#| label: laquinta-state-count-1000
+#| eval: true
+
+laquinta_state_counts <- laquinta %>%
+  count(state)
+
+laquinta_state_counts <- inner_join(laquinta_state_counts, states, by = c("state" = "abbreviation"))
+
+laquinta_state_counts <- mutate(laquinta_state_counts, laquinta_per_1000_sq_miles = n / (area))
+
+laquinta_state_counts <- arrange(laquinta_state_counts, desc(laquinta_per_1000_sq_miles))
+
+print(laquinta_state_counts)
+
+```
+
+**Answer:**
+The states with the most La Quintas per thousand square miles are the Rhode Island, Florida, and Connecticut.
 
 Next, we put the two datasets together into a single data frame.
 However before we do so, we need to add an identifier variable.
@@ -269,8 +359,21 @@ We can plot the locations of the two establishments using a scatter plot, and co
 Note that the latitude is plotted on the x-axis and the longitude on the y-axis.
 
 ```{r}
+#| label: laquinta-vs-dennys
+#| eval: true
+
+dennys <- dennys %>%
+  mutate(establishment = "Denny's")
+laquinta <- laquinta %>%
+  mutate(establishment = "La Quinta")
+
+dn_lq <- bind_rows(dennys, laquinta)
+
+library(ggplot2)
+
 ggplot(dn_lq, mapping = aes(x = longitude, y = latitude, color = establishment)) +
-  geom_point()
+  geom_point() +
+  labs(x = "Longitude", y = "Latitude", color = "Establishment")
 ```
 
 The following two questions ask you to create visualizations.
