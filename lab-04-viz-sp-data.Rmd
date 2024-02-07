@@ -384,6 +384,20 @@ You can also choose different themes to change the overall look of your plots, s
 11. Filter the data for observations in North Carolina only, and recreate the plot.
     You should also adjust the transparency of the points, by setting the `alpha` level, so that it's easier to see the overplotted ones.
     Visually, does Mitch Hedberg's joke appear to hold here?
+    
+```{r}
+#| label: laquinta-vs-dennys-nc
+#| eval: true
+
+nc_data <- filter(dn_lq, state == "NC")
+
+ggplot(nc_data, aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point(alpha = 0.5) +  # Set transparency to 0.5
+  labs(x = "Longitude", y = "Latitude", color = "Establishment")
+```
+
+**Answer:**
+Mitch HEdberg's joke only holds up in the regions of Raleigh, Durham, and Charlotte which have both Denny's and La Quinta establishments. Overall, the two establishments are separated. 
 
 12. Now filter the data for observations in Texas only, and recreate the plot, with an appropriate `alpha` level.
     Visually, does Mitch Hedberg's joke appear to hold here?
