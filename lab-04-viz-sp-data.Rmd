@@ -93,9 +93,43 @@ Along with the name of the state we have the two-letter abbreviation and we have
     (Hint: Use inline R code and functions like `nrow` and `ncol` to compose your answer.) What does each row in the dataset represent?
     What are the variables?
 
+**Answer:**
+The *print(dimensions)* function shows that the dennys dataset has 1643 rows and 6 columns. The *names(dennys)* function shows that the column names are "address", "city", "state", "zip", "longitude", and "latitude".
+    
+```{r}
+#| label: dennys-variables
+#| eval: true
+
+library(dsbox)
+
+data("dennys")
+dimensions <- c(nrow(dennys), ncol(dennys))
+
+print(dimensions)
+
+names(dennys)
+
+```
+
 2.  What are the dimensions of the La Quinta's dataset?
     What does each row in the dataset represent?
     What are the variables?
+
+**Answer:**
+The *print(dimensions)* function shows that the dennys dataset has 909 rows and 6 columns. The *names(laquinta)* function shows that the column names are "address", "city", "state", "zip", "longitude", and "latitude".
+    
+```{r}
+#| label: laquinta-variables
+#| eval: true
+
+data("laquinta")
+dimensions <- c(nrow(laquinta), ncol(laquinta))
+
+print(dimensions)
+
+names(laquinta)
+
+```
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
