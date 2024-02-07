@@ -140,10 +140,18 @@ We would like to limit our analysis to Denny's and La Quinta locations in the Un
     If so, which countries?
     What about Denny's?
 
+**Answer:**
+The La Quinta locations outside of the United States can be found in Canada, Mexico, China, New Zealand, Turkey, United Arab Emirates, Chile, Colombia, and Ecuador.
+
+The Dennys locations outside of the United States can be found in Canada, Mexico, Puerto Rico, Philippines, New Zealand, Honduras, United Arab Emirates, Guatemala, El Salvador, Guam, Indonesia, and Costa Rica.
+
 4.  Now take a look at the data.
     What would be some ways of determining whether or not either establishment has any locations outside the US using just the data (and not the websites).
     Don't worry about whether you know how to implement this, just brainstorm some ideas.
     Write down at least one as your answer, but you're welcomed to write down a few options too.
+    
+**Answer:**
+The biggest factor for an establishment having locations outside the US using just their data would be the state column. If the data is primarily in one to five states, it would be unlikely that the establishment is in other countries. If the establishment is spread widely across the United States, it is much more likely that it would be in other countries as well.
 
 We will determine whether or not the establishment has a location outside the US using the `state` variable in the `dennys` and `laquinta` datasets.
 We know exactly which states are in the US, and we have this information in the `states` dataframe we loaded.
