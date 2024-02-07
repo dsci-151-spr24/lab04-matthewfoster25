@@ -392,15 +392,29 @@ You can also choose different themes to change the overall look of your plots, s
 nc_data <- filter(dn_lq, state == "NC")
 
 ggplot(nc_data, aes(x = longitude, y = latitude, color = establishment)) +
-  geom_point(alpha = 0.5) +  # Set transparency to 0.5
+  geom_point(alpha = 0.5) +
   labs(x = "Longitude", y = "Latitude", color = "Establishment")
 ```
 
 **Answer:**
-Mitch HEdberg's joke only holds up in the regions of Raleigh, Durham, and Charlotte which have both Denny's and La Quinta establishments. Overall, the two establishments are separated. 
+Mitch Hedberg's joke only holds up in the regions of Raleigh, Durham, and Charlotte which have both Denny's and La Quinta establishments. Overall, the two establishments are separated. 
 
 12. Now filter the data for observations in Texas only, and recreate the plot, with an appropriate `alpha` level.
     Visually, does Mitch Hedberg's joke appear to hold here?
+    
+```{r}
+#| label: laquinta-vs-dennys-tx
+#| eval: true
+
+texas_data <- filter(dn_lq, state == "TX")
+
+ggplot(texas_data, aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Longitude", y = "Latitude", color = "Establishment")
+```
+
+**Answer:**
+Mitch Hedberg's joke holds up very well in highly populated areas of Texas such as Austin, Houston, Dallas/Fort-Worth, and San Antonio. However, there are also many La Quinta estblishments that are not beside Denny's.
 
 That's it for now!
 In the next lab we will take a more quantitative approach to answering these questions.
